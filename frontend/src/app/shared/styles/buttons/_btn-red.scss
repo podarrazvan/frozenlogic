@@ -1,15 +1,17 @@
+@import "/src/app/shared/styles/colors";
+
 .btn-red {
   border: none;
   border-radius: 10px;
   padding: 8px;
   cursor: pointer;
   transition: all 0.3s ease 0s;
-  background-color: #ff5050;
+  background-color: $main-red;
   color: white;
 }
 
 .btn-red:hover {
   background-color: white;
-  color: #ff5050;
-  box-shadow: 0px 2px 20px 2px #ff5050;
+  color: $main-red;
+  box-shadow: 0px 2px 20px 2px $main-red;
 }
