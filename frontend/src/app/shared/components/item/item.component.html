@@ -1,0 +1,27 @@
+<div class="card">
+  <div class="card--data">
+    <p *ngIf="!editItemMode">{{ item.data }}</p>
+    <ng-container *ngIf="editItemMode">
+      <input type="text" #newData />
+      <button (click)="editItem(newData.value)">Save</button>
+    </ng-container>
+
+    <ng-container *ngIf="!editItemMode">
+      <button (click)="this.addNewChildren = true">Add</button>
+      <button (click)="editItemMode = true">Edit</button>
+      <button (click)="deleteItem()">Delete</button>
+    </ng-container>
+  </div>
+  <div class="card--children">
+    <app-item *ngFor="let child of item.children" [item]="child"></app-item>
+  </div>
+</div>
+<div class="children-input" *ngIf="addNewChildren">
+  <div class="children-input--box">
+    <app-add-data
+      (item)="addChildren($event)"
+      [isChild]="true"
+      [childOf]="item._id"
+    ></app-add-data>
+  </div>
+</div>

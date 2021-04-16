@@ -1,0 +1,4 @@
+<app-add-data [isChild]="false" (item)="newItem($event)"></app-add-data>
+<ng-container *ngFor="let item of items">
+  <app-item *ngIf="!item.isChild" [item]="item"></app-item>
+</ng-container>
