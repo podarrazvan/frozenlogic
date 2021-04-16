@@ -9,12 +9,21 @@
   place-content: center;
   background: rgba(0, 0, 0, 0.75);
   z-index: 50;
+  &--box {
+    padding: 32px;
+    background-color: white;
+    border-radius: 8px;
+  }
 }
-.card {
+.item {
   display: flex;
   flex-direction: column;
+  width: fit-content;
+  button {
+    margin: 0px 8px;
+  }
   &--data {
-    width: 300px;
+    min-width: 300px;
     height: 100px;
     display: flex;
     flex-direction: row;

@@ -1,18 +1,20 @@
-<div class="card">
-  <div class="card--data">
+<div class="item">
+  <div class="item--data">
     <p *ngIf="!editItemMode">{{ item.data }}</p>
     <ng-container *ngIf="editItemMode">
       <input type="text" #newData />
-      <button (click)="editItem(newData.value)">Save</button>
+      <button (click)="editItem(newData.value)" class="btn-green">Save</button>
     </ng-container>
 
     <ng-container *ngIf="!editItemMode">
-      <button (click)="this.addNewChildren = true">Add</button>
-      <button (click)="editItemMode = true">Edit</button>
-      <button (click)="deleteItem()">Delete</button>
+      <div class="item--data__buttons">
+        <button (click)="this.addNewChildren = true" class="btn-green">Add</button>
+        <button (click)="editItemMode = true"class="btn-main">Edit</button>
+        <button (click)="deleteItem()" class="btn-red">Delete</button>
+      </div>
     </ng-container>
   </div>
-  <div class="card--children">
+  <div class="item--children">
     <app-item *ngFor="let child of item.children" [item]="child"></app-item>
   </div>
 </div>
