@@ -30,6 +30,8 @@
     box-sizing: border-box;
     place-content: center space-around;
     align-items: center;
+    padding: 8px;
+    border-radius: 8px;
     box-shadow: 0 7px 20px 0 rgba(36, 41, 66, 0.15);
   }
   &--children {

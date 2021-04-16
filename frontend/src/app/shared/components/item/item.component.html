@@ -2,8 +2,9 @@
   <div class="item--data">
     <p *ngIf="!editItemMode">{{ item.data }}</p>
     <ng-container *ngIf="editItemMode">
-      <input type="text" #newData />
+      <input type="text" #newData [value]="item.data" />
       <button (click)="editItem(newData.value)" class="btn-green">Save</button>
+      <button class="btn-red" (click)="editItemMode = false">Cancel</button>
     </ng-container>
 
     <ng-container *ngIf="!editItemMode">
@@ -25,5 +26,6 @@
       [isChild]="true"
       [childOf]="item._id"
     ></app-add-data>
+    <button class="btn-red" (click)="addNewChildren = false">Cancel</button>
   </div>
 </div>
