@@ -16,21 +16,21 @@ export class ItemComponent {
   children: IItem[] = [];
   constructor(private service: DatabaseService) {}
 
-  showMore() {
+  showMore(): void {
     this.showMoreItems = true;
-    this.service.getChildren(this.item._id).subscribe((response) => {
+    this.service.getChildren(this.item._id).subscribe((response: IItem[]) => {
       this.children = response;
     });
   }
 
-  addChildren(childId: string) {
+  addChildren(childId: string): void {
     this.addNewChildren = false;
-    let newChildren = this.item.children;
+    const newChildren = this.item.children;
     newChildren.push(childId);
     this.service.editChildren(newChildren, this.item._id).subscribe();
   }
 
-  editItem(newData: any) {
+  editItem(newData: any): void {
     if (this.editItemMode) {
       this.service.editItem(this.item._id, newData).subscribe(() => {
         this.editItemMode = false;
@@ -41,7 +41,7 @@ export class ItemComponent {
     }
   }
 
-  deleteItem() {
+  deleteItem(): void {
     if (this.item.isChild) {
       this.service
         .deleteChild(this.item.childOf, this.item._id)

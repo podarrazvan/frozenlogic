@@ -15,7 +15,7 @@ export class ItemsComponent {
     private service: DatabaseService,
     private sharedDataService: SharedDataService
   ) {
-    this.service.getFirstData().subscribe((items)=>{
+    this.service.getFirstData().subscribe((items: IItem[]) => {
       console.log(items);
       this.items = items;
     });
@@ -26,21 +26,11 @@ export class ItemsComponent {
     // });
   }
 
-  getChildren(id: string) {
-    for (let i = 0; i < this.items.length; i++) {
-      const child = this.items[i];
-      if (child._id === id) {
-        return child;
-      }
-    }
-    return null;
-  }
-
-  newItem(item: any) {
+  newItem(item: any): void {
     this.items.push(item);
   }
 
-  findItem(_id: any) {
-   //..
+  findItem(id: any): void {
+    // ..
   }
 }

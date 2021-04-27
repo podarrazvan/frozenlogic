@@ -1,17 +1,17 @@
-import { Injectable, OnDestroy } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
-import { IItem } from "../interfaces/item.interface";
+import { Injectable, OnDestroy } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { IItem } from '../interfaces/item.interface';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class SharedDataService implements OnDestroy {
-  private deletedItemSubject$ = new BehaviorSubject<IItem>(null!);
+  private deletedItemSubject$ = new BehaviorSubject<IItem | null>(null);
   public deletedItem$ = this.deletedItemSubject$.asObservable();
 
-  setDeletedItem(item: IItem) {
+  setDeletedItem(item: IItem): any {
     this.deletedItemSubject$.next(item);
   }
 
-  ngOnDestroy() {
-    //...
+  ngOnDestroy(): void {
+    // ...
   }
 }

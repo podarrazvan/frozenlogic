@@ -14,14 +14,14 @@ export class AddDataComponent {
 
   constructor(private service: DatabaseService) {}
 
-  addData(data: string) {
+  addData(data: string): void {
     const item: IItem = {
       data,
       children: [],
       isChild: this.isChild,
-      childOf: this.childOf
+      childOf: this.childOf,
     };
-    this.service.addData(item).subscribe((response) => {
+    this.service.addData(item).subscribe((response: any) => {
       this.item.emit(response);
     });
   }

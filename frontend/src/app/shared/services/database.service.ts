@@ -7,41 +7,41 @@ import { IItem } from '../interfaces/item.interface';
 export class DatabaseService {
   constructor(private http: HttpClient) {}
 
-  addData(data: IItem) {
+  addData(data: IItem): any {
     return this.http.post(`${environment.api}/items`, data);
   }
 
-  editChildren(children: IItem[], _id: any) {
+  editChildren(children: IItem[], id: any): any {
     const data = {
       children,
-      _id,
+      _id: id,
     };
     return this.http.put(`${environment.api}/items/children`, data);
   }
 
-  getFirstData() {
+  getFirstData(): any {
     return this.http.get<IItem[]>(`${environment.api}/items`);
   }
 
-  getChildren(_id: string|undefined) {
-    return this.http.get<IItem[]>(`${environment.api}/items/children/${_id}`);
+  getChildren(id: string | undefined): any {
+    return this.http.get<IItem[]>(`${environment.api}/items/children/${id}`);
   }
 
-  editItem(_id: any, data: string) {
+  editItem(id: any, data: string): any {
     const send = {
-      _id,
+      _id: id,
       data,
     };
     return this.http.put(`${environment.api}/items/update`, send);
   }
 
-  deleteItem(_id: any) {
-    return this.http.delete(`${environment.api}/items/${_id}`);
+  deleteItem(id: any): any {
+    return this.http.delete(`${environment.api}/items/${id}`);
   }
 
-  deleteChild(_id: any, children: any) {
+  deleteChild(id: any, children: any): any {
     const data = {
-      _id,
+      _id: id,
       children,
     };
     return this.http.put(`${environment.api}/items/remove-child`, data);
