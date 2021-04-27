@@ -7,7 +7,6 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { Query } from 'mongoose';
 import { ItemsService } from './items.service';
 
 @Controller('items')
@@ -59,11 +58,16 @@ export class ItemsController {
 
   @Get()
   getItems() {
-    return this.itemsService.getItems();
+    return this.itemsService.getFirstItems();
+  }
+
+  @Get('children/:id')
+  getChildren(@Param('id') _id: string) {
+    return this.itemsService.getChildren(_id);
   }
 
   @Delete(':id')
   deleteItem(@Param('id') _id: string) {
-    return this.itemsService.deleteItem(_id);
+   return this.itemsService.deleteItem(_id);
   }
 }

@@ -1,4 +1,4 @@
-import { Item } from "./items.model";
+import { Item } from './items.model';
 import { Model } from 'mongoose';
 export declare class ItemsService {
     private itemModel;
@@ -8,6 +8,7 @@ export declare class ItemsService {
     updateChildren(_id: string, children: string[]): Promise<any>;
     removeChild(_id: any, child: any): Promise<any>;
     editItem(_id: any, data: any): Promise<any>;
-    getItems(): Promise<any[]>;
-    deleteItem(_id: any): Promise<void>;
+    getFirstItems(): Promise<any[]>;
+    getChildren(_id: string): Promise<any[]>;
+    deleteItem(_id: any): Promise<any>;
 }

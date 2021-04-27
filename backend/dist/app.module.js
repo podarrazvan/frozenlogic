@@ -12,11 +12,12 @@ const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const items_module_1 = require("./items/items.module");
 const mongoose_1 = require("@nestjs/mongoose");
+const environment_1 = require("./environments/environment");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     common_1.Module({
-        imports: [items_module_1.ItemsModule, mongoose_1.MongooseModule.forRoot('mongodb+srv://razvan:30DUSP766JmuJgyt@cluster0.lseak.mongodb.net/myFirstDatabase')],
+        imports: [items_module_1.ItemsModule, mongoose_1.MongooseModule.forRoot(environment_1.environment.database)],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
     })

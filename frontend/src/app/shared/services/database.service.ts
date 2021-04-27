@@ -19,8 +19,12 @@ export class DatabaseService {
     return this.http.put(`${environment.api}/items/children`, data);
   }
 
-  getData() {
+  getFirstData() {
     return this.http.get<IItem[]>(`${environment.api}/items`);
+  }
+
+  getChildren(_id: string|undefined) {
+    return this.http.get<IItem[]>(`${environment.api}/items/children/${_id}`);
   }
 
   editItem(_id: any, data: string) {

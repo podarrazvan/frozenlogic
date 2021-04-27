@@ -2,7 +2,7 @@ import * as mongoose from 'mongoose';
 
 export const ItemSchema = new mongoose.Schema({
   data: { type: String, require: true },
-  children: [{ type: String }],
+  children: [{ type: String, select: true }],
   isChild: { type: Boolean, require: true },
   childOf: {type: String}
 });

@@ -7,5 +7,6 @@ export declare class ItemsController {
     removeChild(child: string[], _id: string): Promise<any>;
     updateData(data: string[], _id: string): Promise<any>;
     getItems(): Promise<any[]>;
-    deleteItem(_id: string): Promise<void>;
+    getChildren(_id: string): Promise<any[]>;
+    deleteItem(_id: string): Promise<any>;
 }

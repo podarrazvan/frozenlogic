@@ -28,7 +28,9 @@ let ItemsService = class ItemsService {
         return result;
     }
     async updateChildren(_id, children) {
-        const result = this.itemModel.findByIdAndUpdate({ _id }, { children }).exec();
+        const result = this.itemModel
+            .findByIdAndUpdate({ _id }, { children })
+            .exec();
         return result;
     }
     async removeChild(_id, child) {
@@ -36,19 +38,34 @@ let ItemsService = class ItemsService {
         let children = item.children;
         const index = children.indexOf(child);
         children.splice(index, 1);
-        const result = this.itemModel.findByIdAndUpdate({ _id }, { children }).exec();
+        const result = this.itemModel
+            .findByIdAndUpdate({ _id }, { children })
+            .exec();
         return result;
     }
     editItem(_id, data) {
         const result = this.itemModel.findByIdAndUpdate({ _id }, { data }).exec();
         return result;
     }
-    async getItems() {
-        const result = await this.itemModel.find().exec();
+    async getFirstItems() {
+        const result = await this.itemModel.find({ isChild: false }).exec();
         return result;
+    }
+    async getChildren(_id) {
+        const item = await this.itemModel.findById({ _id }).exec();
+        const children = item.children;
+        let responseData = [];
+        for (let child of children) {
+            const result = await this.itemModel.findById({ _id: child }).exec();
+            responseData.push(result);
+        }
+        if (responseData.length === children.length) {
+            return responseData;
+        }
     }
     async deleteItem(_id) {
         const result = await this.itemModel.findOneAndDelete({ _id }).exec();
+        return result;
     }
 };
 ItemsService = __decorate([

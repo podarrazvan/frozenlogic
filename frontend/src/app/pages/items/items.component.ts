@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IItem } from 'src/app/shared/interfaces/item.interface';
 import { DatabaseService } from 'src/app/shared/services/database.service';
+import { SharedDataService } from 'src/app/shared/services/shared-data.service';
 
 @Component({
   selector: 'app-items',
@@ -10,26 +11,19 @@ import { DatabaseService } from 'src/app/shared/services/database.service';
 export class ItemsComponent {
   items: IItem[] = [];
 
-  constructor(private service: DatabaseService) {
-    this.getData();
-  }
-
-  getData() {
-    this.service.getData().subscribe((items) => {
+  constructor(
+    private service: DatabaseService,
+    private sharedDataService: SharedDataService
+  ) {
+    this.service.getFirstData().subscribe((items)=>{
+      console.log(items);
       this.items = items;
-      for (let i = 0; i < items.length; i++) {
-        const item = items[i];
-        if (item.children.length > 0) {
-          for (let y = 0; y < item.children.length; y++) {
-            const child = item.children[y];
-            if (this.getChildren(child) != null) {
-              item.children[y] = this.getChildren(child);
-              this.items[i] = item;
-            }
-          }
-        }
-      }
     });
+    // this.sharedDataService.deletedItem$.subscribe((item) => {
+    //   if(item != null) {
+    //     this.findItem(item._id);
+    //   }
+    // });
   }
 
   getChildren(id: string) {
@@ -44,5 +38,9 @@ export class ItemsComponent {
 
   newItem(item: any) {
     this.items.push(item);
+  }
+
+  findItem(_id: any) {
+   //..
   }
 }

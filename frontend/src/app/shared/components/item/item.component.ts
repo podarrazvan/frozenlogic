@@ -12,7 +12,16 @@ export class ItemComponent {
   @Output() deleted = new EventEmitter<IItem>();
   addNewChildren = false;
   editItemMode = false;
+  showMoreItems = false;
+  children: IItem[] = []
   constructor(private service: DatabaseService) {
+  }
+
+  showMore() {
+    this.showMoreItems = true;
+    this.service.getChildren(this.item._id).subscribe((response)=> {
+      this.children = response;
+    });
   }
 
   addChildren(childId: string) {
@@ -38,11 +47,13 @@ export class ItemComponent {
       this.service.deleteChild(this.item.childOf, this.item._id).subscribe(()=> {
         this.service.deleteItem(this.item._id).subscribe(()=>{
           location.reload();
+          this.deleted.emit(this.item);
         });
       })
     }
     this.service.deleteItem(this.item._id).subscribe(()=>{
       location.reload();
+      this.deleted.emit(this.item);
     });
   }
 }
