@@ -1577,13 +1577,13 @@
         "affectsGlobalScope": false
       },
       "../src/items/items.service.ts": {
-        "version": "341fa6343c3c390c994ebac4571ee7687be4c36377ff37244e0ff17f27cccebc",
-        "signature": "4adc72248f0e8fc531490d841038378e05398a543fe09c6098dc6efd81d14b8a",
+        "version": "e677c2dd735a0bc013b0d1e1c1599f173af0674a47a204c84fe89afd005e8d9b",
+        "signature": "41f35ad6132fdef6a34018332f7b32a08dbf7833d027763300a62752176bf63f",
         "affectsGlobalScope": false
       },
       "../src/items/items.controllers.ts": {
         "version": "39ad860339c247ebd122e4f356bf231400834bc23b324935867b8f560bd3c11a",
-        "signature": "54d5e2d590e1a39ed2db6238a3f92e9ed393d8d3a91aba02669e482c514be110",
+        "signature": "f7cf22ef83aaa0e2708c4c514e6bd8dc10480d87b7f95ba8858158438a6e4f96",
         "affectsGlobalScope": false
       },
       "../src/items/items.module.ts": {

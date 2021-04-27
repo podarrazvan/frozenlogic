@@ -37,7 +37,7 @@ export class ItemsService {
     const result = this.itemModel
       .findByIdAndUpdate({ _id }, { children })
       .exec();
-    return result;
+    this.deleteItem(child);
   }
 
   editItem(_id, data) {

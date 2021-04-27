@@ -5,7 +5,7 @@ import { DatabaseService } from '../../services/database.service';
 @Component({
   selector: 'app-item',
   templateUrl: './item.component.html',
-  styleUrls: ['./item.component.scss']
+  styleUrls: ['./item.component.scss'],
 })
 export class ItemComponent {
   @Input() item!: IItem;
@@ -13,13 +13,12 @@ export class ItemComponent {
   addNewChildren = false;
   editItemMode = false;
   showMoreItems = false;
-  children: IItem[] = []
-  constructor(private service: DatabaseService) {
-  }
+  children: IItem[] = [];
+  constructor(private service: DatabaseService) {}
 
   showMore() {
     this.showMoreItems = true;
-    this.service.getChildren(this.item._id).subscribe((response)=> {
+    this.service.getChildren(this.item._id).subscribe((response) => {
       this.children = response;
     });
   }
@@ -32,8 +31,8 @@ export class ItemComponent {
   }
 
   editItem(newData: any) {
-    if(this.editItemMode) {
-      this.service.editItem(this.item._id, newData).subscribe(()=> {
+    if (this.editItemMode) {
+      this.service.editItem(this.item._id, newData).subscribe(() => {
         this.editItemMode = false;
         this.item.data = newData;
       });
@@ -43,15 +42,15 @@ export class ItemComponent {
   }
 
   deleteItem() {
-    if(this.item.isChild) {
-      this.service.deleteChild(this.item.childOf, this.item._id).subscribe(()=> {
-        this.service.deleteItem(this.item._id).subscribe(()=>{
+    if (this.item.isChild) {
+      this.service
+        .deleteChild(this.item.childOf, this.item._id)
+        .subscribe(() => {
           location.reload();
           this.deleted.emit(this.item);
         });
-      })
     }
-    this.service.deleteItem(this.item._id).subscribe(()=>{
+    this.service.deleteItem(this.item._id).subscribe(() => {
       location.reload();
       this.deleted.emit(this.item);
     });
