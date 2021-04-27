@@ -51,14 +51,14 @@ export class ItemsController {
     return item;
   }
 
+    @Get('children/:id')
+    async getChildren(@Param('id') _id: string) {
+      return this.itemsService.getChildren(_id);
+    }
+
   @Get(':page/:limit')
   async getItems(@Param('page') page: string, @Param('limit') limit: string) {
     return this.itemsService.getFirstItems(+page, +limit);
-  }
-
-  @Get('children/:id')
-  getChildren(@Param('id') _id: string) {
-    return this.itemsService.getChildren(_id);
   }
 
   @Delete(':id')

@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { IItem } from '../../interfaces/item.interface';
 import { DatabaseService } from '../../services/database.service';
+import { SharedDataService } from '../../services/shared-data.service';
 
 @Component({
   selector: 'app-item',
@@ -14,7 +15,10 @@ export class ItemComponent {
   editItemMode = false;
   showMoreItems = false;
   children: IItem[] = [];
-  constructor(private service: DatabaseService) {}
+  constructor(
+    private service: DatabaseService,
+    private sharedDataService: SharedDataService
+  ) {}
 
   showMore(): void {
     this.showMoreItems = true;
@@ -46,13 +50,11 @@ export class ItemComponent {
       this.service
         .deleteChild(this.item.childOf, this.item._id)
         .subscribe(() => {
-          location.reload();
-          this.deleted.emit(this.item);
+          this.sharedDataService.setDeletedItem(this.item);
         });
     }
     this.service.deleteItem(this.item._id).subscribe(() => {
-      location.reload();
-      this.deleted.emit(this.item);
+      this.sharedDataService.setDeletedItem(this.item);
     });
   }
 }

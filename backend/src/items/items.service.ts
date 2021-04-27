@@ -46,6 +46,7 @@ export class ItemsService {
   }
 
   async getFirstItems(page, limit) {
+    console.log('first')
     const startIndex = (page - 1) * limit;
     const endIndex = page * limit;
 
@@ -77,6 +78,7 @@ export class ItemsService {
   }
 
   async getChildren(_id: string) {
+    console.log('children')
     const item = await this.itemModel.findById({ _id }).exec(); //! try to get only children
     const children = item.children;
     let responseData = [];

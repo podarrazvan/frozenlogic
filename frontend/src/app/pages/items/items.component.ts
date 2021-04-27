@@ -20,11 +20,11 @@ export class ItemsComponent {
     private sharedDataService: SharedDataService
   ) {
     this.getItems();
-    // this.sharedDataService.deletedItem$.subscribe((item) => {
-    //   if(item != null) {
-    //     this.findItem(item._id);
-    //   }
-    // });
+    this.sharedDataService.deletedItem$.subscribe((item) => {
+      if (item != null) {
+        this.findItem(item._id);
+      }
+    });
   }
 
   getItems(): void {

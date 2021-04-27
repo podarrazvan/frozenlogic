@@ -21,10 +21,12 @@ export class DatabaseService {
   }
 
   getFirstData(page: number, limit: number): any {
-    return this.http.get<IPaginatedResult>(`${environment.api}/items/${page}/${limit}`);
+    return this.http.get<IPaginatedResult>(
+      `${environment.api}/items/${page}/${limit}`
+    );
   }
 
-  getChildren(id: string | undefined): any {
+  getChildren(id: any): any {
     return this.http.get<IItem[]>(`${environment.api}/items/children/${id}`);
   }
 

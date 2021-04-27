@@ -35,11 +35,11 @@ let ItemsController = class ItemsController {
         const item = await this.itemsService.editItem(_id, data);
         return item;
     }
+    async getChildren(_id) {
+        return this.itemsService.getChildren(_id);
+    }
     async getItems(page, limit) {
         return this.itemsService.getFirstItems(+page, +limit);
-    }
-    getChildren(_id) {
-        return this.itemsService.getChildren(_id);
     }
     deleteItem(_id) {
         return this.itemsService.deleteItem(_id);
@@ -78,19 +78,19 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ItemsController.prototype, "updateData", null);
 __decorate([
+    common_1.Get('children/:id'),
+    __param(0, common_1.Param('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ItemsController.prototype, "getChildren", null);
+__decorate([
     common_1.Get(':page/:limit'),
     __param(0, common_1.Param('page')), __param(1, common_1.Param('limit')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", Promise)
 ], ItemsController.prototype, "getItems", null);
-__decorate([
-    common_1.Get('children/:id'),
-    __param(0, common_1.Param('id')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
-], ItemsController.prototype, "getChildren", null);
 __decorate([
     common_1.Delete(':id'),
     __param(0, common_1.Param('id')),
