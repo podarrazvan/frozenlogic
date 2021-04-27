@@ -35,8 +35,8 @@ let ItemsController = class ItemsController {
         const item = await this.itemsService.editItem(_id, data);
         return item;
     }
-    getItems() {
-        return this.itemsService.getFirstItems();
+    async getItems(page, limit) {
+        return this.itemsService.getFirstItems(+page, +limit);
     }
     getChildren(_id) {
         return this.itemsService.getChildren(_id);
@@ -65,25 +65,24 @@ __decorate([
 ], ItemsController.prototype, "updateChildren", null);
 __decorate([
     common_1.Put('remove-child'),
-    __param(0, common_1.Body('child')),
-    __param(1, common_1.Body('_id')),
+    __param(0, common_1.Body('child')), __param(1, common_1.Body('_id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Array, String]),
     __metadata("design:returntype", Promise)
 ], ItemsController.prototype, "removeChild", null);
 __decorate([
     common_1.Put('update'),
-    __param(0, common_1.Body('data')),
-    __param(1, common_1.Body('_id')),
+    __param(0, common_1.Body('data')), __param(1, common_1.Body('_id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Array, String]),
     __metadata("design:returntype", Promise)
 ], ItemsController.prototype, "updateData", null);
 __decorate([
-    common_1.Get(),
+    common_1.Get(':page/:limit'),
+    __param(0, common_1.Param('page')), __param(1, common_1.Param('limit')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
+    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:returntype", Promise)
 ], ItemsController.prototype, "getItems", null);
 __decorate([
     common_1.Get('children/:id'),

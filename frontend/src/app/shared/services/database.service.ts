@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { IItem } from '../interfaces/item.interface';
+import { IPaginatedResult } from '../interfaces/paginated-result.interface';
 
 @Injectable({ providedIn: 'root' })
 export class DatabaseService {
@@ -19,8 +20,8 @@ export class DatabaseService {
     return this.http.put(`${environment.api}/items/children`, data);
   }
 
-  getFirstData(): any {
-    return this.http.get<IItem[]>(`${environment.api}/items`);
+  getFirstData(page: number, limit: number): any {
+    return this.http.get<IPaginatedResult>(`${environment.api}/items/${page}/${limit}`);
   }
 
   getChildren(id: string | undefined): any {

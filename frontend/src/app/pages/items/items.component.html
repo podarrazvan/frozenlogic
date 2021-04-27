@@ -5,4 +5,9 @@
   <ng-container *ngFor="let item of items">
     <app-item *ngIf="!item.isChild" [item]="item"></app-item>
   </ng-container>
+  <div class="page--pagination">
+    <button *ngIf="page > 1" (click)="previousPage()">Previous</button>
+    <p>{{ page }}</p>
+    <button *ngIf="hasNext" (click)="nextPage()">Next</button>
+  </div>
 </div>

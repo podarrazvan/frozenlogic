@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IItem } from 'src/app/shared/interfaces/item.interface';
+import { IPaginatedResult } from 'src/app/shared/interfaces/paginated-result.interface';
 import { DatabaseService } from 'src/app/shared/services/database.service';
 import { SharedDataService } from 'src/app/shared/services/shared-data.service';
 
@@ -10,15 +11,15 @@ import { SharedDataService } from 'src/app/shared/services/shared-data.service';
 })
 export class ItemsComponent {
   items: IItem[] = [];
+  page = 1;
+  limit = 5;
+  hasNext = true;
 
   constructor(
     private service: DatabaseService,
     private sharedDataService: SharedDataService
   ) {
-    this.service.getFirstData().subscribe((items: IItem[]) => {
-      console.log(items);
-      this.items = items;
-    });
+    this.getItems();
     // this.sharedDataService.deletedItem$.subscribe((item) => {
     //   if(item != null) {
     //     this.findItem(item._id);
@@ -26,11 +27,37 @@ export class ItemsComponent {
     // });
   }
 
+  getItems(): void {
+    this.service
+      .getFirstData(this.page, this.limit)
+      .subscribe((response: IPaginatedResult) => {
+        this.items = response.results;
+        if (response.next) {
+          this.hasNext = true;
+        } else {
+          this.hasNext = false;
+        }
+      });
+  }
+
   newItem(item: any): void {
+    if (this.items === null) {
+      this.items = [];
+    }
     this.items.push(item);
   }
 
   findItem(id: any): void {
     // ..
+  }
+
+  nextPage(): void {
+    this.page++;
+    this.getItems();
+  }
+
+  previousPage(): void {
+    this.page--;
+    this.getItems();
   }
 }

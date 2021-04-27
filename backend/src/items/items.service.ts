@@ -45,9 +45,35 @@ export class ItemsService {
     return result;
   }
 
-  async getFirstItems() {
-    const result = await this.itemModel.find({ isChild: false }).exec(); //! don't get children!
-    return result;
+  async getFirstItems(page, limit) {
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+
+    const results: IResult = {};
+
+    if (endIndex < (await this.itemModel.countDocuments().exec())) {
+      results.next = {
+        page: page + 1,
+        limit: limit,
+      };
+    }
+
+    if (startIndex > 0) {
+      results.previous = {
+        page: page - 1,
+        limit: limit,
+      };
+    }
+    try {
+      results.results = await this.itemModel
+        .find({ isChild: false })
+        .limit(limit)
+        .skip(startIndex)
+        .exec();
+      return results;
+    } catch (e) {
+      return { message: e.message };
+    }
   }
 
   async getChildren(_id: string) {
@@ -67,4 +93,16 @@ export class ItemsService {
     const result = await this.itemModel.findOneAndDelete({ _id }).exec();
     return result;
   }
+}
+
+export interface IResult {
+  results?: Item[];
+  previous?: {
+    page: number;
+    limit: number;
+  };
+  next?: {
+    page: number;
+    limit: number;
+  };
 }

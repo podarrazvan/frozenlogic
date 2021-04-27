@@ -14,6 +14,7 @@ export class ItemsController {
   constructor(private itemsService: ItemsService) {}
 
   @Post()
+  //! use object!
   async addtem(
     @Body('data') data: string,
     @Body('children') children: string[],
@@ -39,26 +40,20 @@ export class ItemsController {
   }
 
   @Put('remove-child')
-  async removeChild(
-    @Body('child')  child: string[],
-    @Body('_id') _id: string
-  ) {
+  async removeChild(@Body('child') child: string[], @Body('_id') _id: string) {
     const item = await this.itemsService.removeChild(_id, child);
     return item;
   }
 
   @Put('update')
-  async updateData(
-    @Body('data') data: string[],
-    @Body('_id') _id: string
-  ) {
+  async updateData(@Body('data') data: string[], @Body('_id') _id: string) {
     const item = await this.itemsService.editItem(_id, data);
     return item;
   }
 
-  @Get()
-  getItems() {
-    return this.itemsService.getFirstItems();
+  @Get(':page/:limit')
+  async getItems(@Param('page') page: string, @Param('limit') limit: string) {
+    return this.itemsService.getFirstItems(+page, +limit);
   }
 
   @Get('children/:id')
@@ -68,6 +63,6 @@ export class ItemsController {
 
   @Delete(':id')
   deleteItem(@Param('id') _id: string) {
-   return this.itemsService.deleteItem(_id);
+    return this.itemsService.deleteItem(_id);
   }
 }

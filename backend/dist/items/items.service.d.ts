@@ -8,7 +8,20 @@ export declare class ItemsService {
     updateChildren(_id: string, children: string[]): Promise<any>;
     removeChild(_id: any, child: any): Promise<void>;
     editItem(_id: any, data: any): Promise<any>;
-    getFirstItems(): Promise<any[]>;
+    getFirstItems(page: any, limit: any): Promise<IResult | {
+        message: any;
+    }>;
     getChildren(_id: string): Promise<any[]>;
     deleteItem(_id: any): Promise<any>;
+}
+export interface IResult {
+    results?: Item[];
+    previous?: {
+        page: number;
+        limit: number;
+    };
+    next?: {
+        page: number;
+        limit: number;
+    };
 }
