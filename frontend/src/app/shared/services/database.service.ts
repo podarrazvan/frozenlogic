@@ -4,12 +4,13 @@ import { environment } from 'src/environments/environment';
 import { IItem } from '../interfaces/item.interface';
 import { IPaginatedResult } from '../interfaces/paginated-result.interface';
 
+const urlItems = `${environment.api}/items`;
 @Injectable({ providedIn: 'root' })
 export class DatabaseService {
   constructor(private http: HttpClient) {}
 
   addData(data: IItem): any {
-    return this.http.post(`${environment.api}/items`, data);
+    return this.http.post(urlItems, data);
   }
 
   editChildren(children: IItem[], id: any): any {
@@ -17,17 +18,15 @@ export class DatabaseService {
       children,
       _id: id,
     };
-    return this.http.put(`${environment.api}/items/children`, data);
+    return this.http.put(`${urlItems}/children`, data);
   }
 
   getFirstData(page: number, limit: number): any {
-    return this.http.get<IPaginatedResult>(
-      `${environment.api}/items/${page}/${limit}`
-    );
+    return this.http.get<IPaginatedResult>(`${urlItems}/${page}/${limit}`);
   }
 
   getChildren(id: any): any {
-    return this.http.get<IItem[]>(`${environment.api}/items/children/${id}`);
+    return this.http.get<IItem[]>(`${urlItems}/children/${id}`);
   }
 
   editItem(id: any, data: string): any {
@@ -35,11 +34,11 @@ export class DatabaseService {
       _id: id,
       data,
     };
-    return this.http.put(`${environment.api}/items/update`, send);
+    return this.http.put(`${urlItems}/update`, send);
   }
 
   deleteItem(id: any): any {
-    return this.http.delete(`${environment.api}/items/${id}`);
+    return this.http.delete(`${urlItems}/${id}`);
   }
 
   deleteChild(id: any, children: any): any {
@@ -47,6 +46,6 @@ export class DatabaseService {
       _id: id,
       children,
     };
-    return this.http.put(`${environment.api}/items/remove-child`, data);
+    return this.http.put(`${urlItems}/remove-child`, data);
   }
 }

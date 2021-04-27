@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IItem } from 'src/app/shared/interfaces/item.interface';
 import { IPaginatedResult } from 'src/app/shared/interfaces/paginated-result.interface';
 import { DatabaseService } from 'src/app/shared/services/database.service';
-import { SharedDataService } from 'src/app/shared/services/shared-data.service';
 
 @Component({
   selector: 'app-items',
@@ -17,14 +16,8 @@ export class ItemsComponent {
 
   constructor(
     private service: DatabaseService,
-    private sharedDataService: SharedDataService
   ) {
     this.getItems();
-    this.sharedDataService.deletedItem$.subscribe((item) => {
-      if (item != null) {
-        this.findItem(item._id);
-      }
-    });
   }
 
   getItems(): void {
@@ -45,10 +38,6 @@ export class ItemsComponent {
       this.items = [];
     }
     this.items.push(item);
-  }
-
-  findItem(id: any): void {
-    // ..
   }
 
   nextPage(): void {

@@ -1,7 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { IItem } from '../../interfaces/item.interface';
 import { DatabaseService } from '../../services/database.service';
-import { SharedDataService } from '../../services/shared-data.service';
 
 @Component({
   selector: 'app-item',
@@ -9,22 +8,25 @@ import { SharedDataService } from '../../services/shared-data.service';
   styleUrls: ['./item.component.scss'],
 })
 export class ItemComponent {
-  @Input() item!: IItem;
+  @Input() item!: any;
   @Output() deleted = new EventEmitter<IItem>();
   addNewChildren = false;
   editItemMode = false;
   showMoreItems = false;
   children: IItem[] = [];
-  constructor(
-    private service: DatabaseService,
-    private sharedDataService: SharedDataService
-  ) {}
+  constructor(private service: DatabaseService) {}
 
   showMore(): void {
-    this.showMoreItems = true;
-    this.service.getChildren(this.item._id).subscribe((response: IItem[]) => {
-      this.children = response;
-    });
+    if (!this.editItemMode) {
+      this.showMoreItems = !this.showMoreItems;
+      if (this.showMoreItems) {
+        this.service
+          .getChildren(this.item._id)
+          .subscribe((response: IItem[]) => {
+            this.children = response;
+          });
+      }
+    }
   }
 
   addChildren(childId: string): void {
@@ -45,16 +47,27 @@ export class ItemComponent {
     }
   }
 
-  deleteItem(): void {
+  setNewChildrenMode(event: Event): void {
+    event.stopPropagation();
+    this.addNewChildren = true;
+  }
+
+  setEditItemMode(event: Event, mode: boolean): void {
+    event.stopPropagation();
+    this.editItemMode = mode;
+  }
+
+  deleteItem(event: Event): void {
+    event.stopPropagation();
     if (this.item.isChild) {
       this.service
         .deleteChild(this.item.childOf, this.item._id)
         .subscribe(() => {
-          this.sharedDataService.setDeletedItem(this.item);
+          this.item = null;
         });
     }
     this.service.deleteItem(this.item._id).subscribe(() => {
-      this.sharedDataService.setDeletedItem(this.item);
+      this.item = null;
     });
   }
 }
