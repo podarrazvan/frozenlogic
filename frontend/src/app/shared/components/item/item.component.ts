@@ -31,11 +31,16 @@ export class ItemComponent {
     }
   }
 
-  addChildren(childId: string): void {
+  addChildren(child: IItem): void {
+    this.children.push(child);
     this.addNewChildren = false;
     const newChildren = this.item.children;
-    newChildren.push(childId);
-    this.service.editChildren(this.item._id, newChildren).subscribe();
+    newChildren.push(child._id);
+    this.service
+      .editChildren(this.item._id, newChildren)
+      .subscribe(() => {
+
+      });
   }
 
   editItem(newData: any): void {
