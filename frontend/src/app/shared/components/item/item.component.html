@@ -2,19 +2,29 @@
   <div class="item--data" (click)="showMore()">
     <p *ngIf="!editItemMode">{{ item.data }}</p>
     <ng-container *ngIf="editItemMode">
-      <input type="text" #newData [value]="item.data" />
-      <button (click)="editItem(newData.value)" class="btn-green">Save</button>
-      <button class="btn-red" (click)="setEditItemMode($event, false)">Cancel</button>
+      <input type="text" [(ngModel)]="newData" [value]="item.data" />
+      <button
+        (click)="editItem(newData)"
+        class="btn-green"
+        [disabled]="newData == ''"
+        [class.disabled]="newData == ''"
+      >
+        Save
+      </button>
+      <button class="btn-red" (click)="setEditItemMode($event, false)">
+        Cancel
+      </button>
     </ng-container>
 
     <ng-container *ngIf="!editItemMode">
       <div class="item--data__buttons">
-        <ng-container *ngIf="item.children">
-        </ng-container>
+        <ng-container *ngIf="item.children"> </ng-container>
         <button (click)="setNewChildrenMode($event)" class="btn-green">
           Add
         </button>
-        <button (click)="setEditItemMode($event, true)" class="btn-main">Edit</button>
+        <button (click)="setEditItemMode($event, true)" class="btn-main">
+          Edit
+        </button>
         <button (click)="deleteItem($event)" class="btn-red">Delete</button>
       </div>
     </ng-container>

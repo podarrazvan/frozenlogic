@@ -11,6 +11,7 @@ export class AddDataComponent {
   @Input() isChild = false;
   @Input() childOf: any;
   @Output() item = new EventEmitter();
+  data = '';
 
   constructor(private service: DatabaseService) {}
 

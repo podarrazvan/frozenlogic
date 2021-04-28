@@ -1,2 +1,9 @@
-<input type="text" #data placeholder="Add data">
-<button (click)="addData(data.value)" class="btn-green">Add</button>
+<input type="text" [(ngModel)]="data" placeholder="Add data" />
+<button
+  (click)="addData(data)"
+  class="btn-green"
+  [disabled]="data === ''"
+  [class.disabled]="data === ''"
+>
+  Add
+</button>

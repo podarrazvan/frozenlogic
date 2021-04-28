@@ -14,6 +14,8 @@ export class ItemComponent {
   editItemMode = false;
   showMoreItems = false;
   children: IItem[] = [];
+  newData = '';
+
   constructor(private service: DatabaseService) {}
 
   showMore(): void {
@@ -54,6 +56,7 @@ export class ItemComponent {
 
   setEditItemMode(event: Event, mode: boolean): void {
     event.stopPropagation();
+    this.newData = this.item.data;
     this.editItemMode = mode;
   }
 

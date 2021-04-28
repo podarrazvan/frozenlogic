@@ -1,0 +1,10 @@
+.disabled {
+  background-color: grey;
+  cursor: not-allowed;
+}
+
+.disabled:hover {
+  box-shadow: none;
+  background-color: grey;
+  color: white;
+}
