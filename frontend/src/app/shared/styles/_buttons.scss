@@ -1,0 +1,52 @@
+@import "/src/app/shared/styles/colors";
+
+.btn {
+  border: none;
+  border-radius: 10px;
+  padding: 8px;
+  cursor: pointer;
+  color: white;
+  transition: all 0.3s ease 0s;
+}
+
+.btn:hover {
+  background-color: white;
+}
+.green {
+  background-color: $main-green;
+}
+
+.green:hover {
+  color: $main-green;
+  box-shadow: 0px 2px 20px 2px $main-green;
+}
+
+.red {
+  background-color: $main-red;
+}
+
+.red:hover {
+  color: $main-red;
+  box-shadow: 0px 2px 20px 2px $main-red;
+}
+
+.main {
+  height: fit-content;
+  color: black;
+  box-shadow: 0 7px 20px 0 rgba(36, 41, 66, 0.15);
+}
+
+.main:hover {
+  color: $main-red;
+}
+
+.disabled {
+  background-color: grey;
+  cursor: not-allowed;
+}
+
+.disabled:hover {
+  box-shadow: none;
+  background-color: grey;
+  color: white;
+}

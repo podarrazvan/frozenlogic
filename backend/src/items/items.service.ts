@@ -10,7 +10,7 @@ export class ItemsService {
   constructor(@InjectModel('Item') private itemModel: Model<any>) {}
 
   async insertItem(item: Item) {
-    const newItem = new this.itemModel(item);
+    const newItem = await new this.itemModel(item);
     return await newItem.save();
   }
 
