@@ -1,0 +1,13 @@
+.pagination {
+  width: calc(100% - 62px);
+  display: flex;
+  align-items: center;
+  place-content: center;
+  margin-bottom: 32px;
+  button {
+    margin: 8px;
+  }
+  input {
+    width: 32px;
+  }
+}

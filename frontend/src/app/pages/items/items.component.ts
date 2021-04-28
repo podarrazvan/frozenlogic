@@ -13,14 +13,14 @@ export class ItemsComponent {
   page = 1;
   limit = 5;
   hasNext = true;
+  loading = true;
 
-  constructor(
-    private service: DatabaseService,
-  ) {
+  constructor(private service: DatabaseService) {
     this.getItems();
   }
 
   getItems(): void {
+    this.loading = true;
     this.service
       .getFirstData(this.page, this.limit)
       .subscribe((response: IPaginatedResult) => {
@@ -30,6 +30,7 @@ export class ItemsComponent {
         } else {
           this.hasNext = false;
         }
+        this.loading = false;
       });
   }
 
@@ -40,13 +41,8 @@ export class ItemsComponent {
     this.items.push(item);
   }
 
-  nextPage(): void {
-    this.page++;
-    this.getItems();
-  }
-
-  previousPage(): void {
-    this.page--;
+  onPageChanged(page: any): void {
+    this.page = page;
     this.getItems();
   }
 }

@@ -5,9 +5,12 @@
   <ng-container *ngFor="let item of items">
     <app-item *ngIf="!item.isChild" [item]="item"></app-item>
   </ng-container>
-  <div class="page--pagination">
-    <button *ngIf="page > 1" (click)="previousPage()">Previous</button>
-    <p>{{ page }}</p>
-    <button *ngIf="hasNext" (click)="nextPage()">Next</button>
-  </div>
+  <h1 *ngIf="items.length === 0">{{ loading ? "Loading" : "No data..." }}</h1>
 </div>
+<ng-container *ngIf="page > 1 || hasNext">
+  <app-pagination
+    [hasNext]="hasNext"
+    [page]="page"
+    (newPage)="onPageChanged($event)"
+  ></app-pagination>
+</ng-container>

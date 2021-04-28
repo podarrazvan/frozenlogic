@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Item } from './items.model';
 import { Model } from 'mongoose';
-import { response } from 'express';
 
 @Injectable()
 export class ItemsService {
@@ -44,7 +43,7 @@ export class ItemsService {
 
     const results: IResult = {};
 
-    if (endIndex < (await this.itemModel.countDocuments().exec())) {
+    if (endIndex < (await this.itemModel.find({ isChild: false }).countDocuments().exec())) {
       results.next = {
         page: page + 1,
         limit: limit,
@@ -70,7 +69,7 @@ export class ItemsService {
   }
 
   async getChildren(_id: string) {
-    const item = await this.itemModel.findById({ _id }).exec(); //! try to get only children
+    const item = await this.itemModel.findById({ _id }).exec();
     const children = item.children;
     let responseData = [];
     for (let child of children) {

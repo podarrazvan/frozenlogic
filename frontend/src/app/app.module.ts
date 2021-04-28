@@ -7,13 +7,15 @@ import { AppComponent } from './app.component';
 import { ItemsComponent } from './pages/items/items.component';
 import { AddDataComponent } from './shared/components/add-data/add-data.component';
 import { ItemComponent } from './shared/components/item/item.component';
+import { PaginationComponent } from './shared/components/pagination/pagination.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ItemsComponent,
     AddDataComponent,
-    ItemComponent
+    ItemComponent,
+    PaginationComponent
   ],
   imports: [
     BrowserModule,
