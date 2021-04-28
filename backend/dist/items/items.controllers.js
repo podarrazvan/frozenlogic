@@ -19,60 +19,53 @@ let ItemsController = class ItemsController {
     constructor(itemsService) {
         this.itemsService = itemsService;
     }
-    async addtem(data, children, isChild, childOf) {
-        const item = await this.itemsService.insertItem(data, children, isChild, childOf);
-        return item;
+    async addtem(item) {
+        return await this.itemsService.insertItem(item);
     }
-    async updateChildren(children, _id) {
-        const item = await this.itemsService.updateChildren(_id, children);
-        return item;
+    async updateChildren(children, id) {
+        return await this.itemsService.updateChildren(id, children);
     }
-    async removeChild(child, _id) {
-        const item = await this.itemsService.removeChild(_id, child);
-        return item;
+    async removeChild(child, id) {
+        return await this.itemsService.removeChild(id, child);
     }
-    async updateData(data, _id) {
-        const item = await this.itemsService.editItem(_id, data);
-        return item;
+    async updateData(data, id) {
+        return await this.itemsService.editItem(id, data);
     }
-    async getChildren(_id) {
-        return this.itemsService.getChildren(_id);
+    async getChildren(id) {
+        return await this.itemsService.getChildren(id);
     }
     async getItems(page, limit) {
-        return this.itemsService.getFirstItems(+page, +limit);
+        return await this.itemsService.getFirstItems(+page, +limit);
     }
-    deleteItem(_id) {
-        return this.itemsService.deleteItem(_id);
+    async deleteItem(id) {
+        return await this.itemsService.deleteItem(id);
     }
 };
 __decorate([
     common_1.Post(),
-    __param(0, common_1.Body('data')),
-    __param(1, common_1.Body('children')),
-    __param(2, common_1.Body('isChild')),
-    __param(3, common_1.Body('childOf')),
+    __param(0, common_1.Body('item')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Array, Boolean, String]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], ItemsController.prototype, "addtem", null);
 __decorate([
     common_1.Put('children'),
     __param(0, common_1.Body('children')),
-    __param(1, common_1.Body('_id')),
+    __param(1, common_1.Body('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Array, String]),
     __metadata("design:returntype", Promise)
 ], ItemsController.prototype, "updateChildren", null);
 __decorate([
     common_1.Put('remove-child'),
-    __param(0, common_1.Body('child')), __param(1, common_1.Body('_id')),
+    __param(0, common_1.Body('child')), __param(1, common_1.Body('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Array, String]),
     __metadata("design:returntype", Promise)
 ], ItemsController.prototype, "removeChild", null);
 __decorate([
     common_1.Put('update'),
-    __param(0, common_1.Body('data')), __param(1, common_1.Body('_id')),
+    __param(0, common_1.Body('data')), __param(1, common_1.Body('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Array, String]),
     __metadata("design:returntype", Promise)
@@ -96,7 +89,7 @@ __decorate([
     __param(0, common_1.Param('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], ItemsController.prototype, "deleteItem", null);
 ItemsController = __decorate([
     common_1.Controller('items'),

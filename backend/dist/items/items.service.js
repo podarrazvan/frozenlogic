@@ -16,42 +16,38 @@ exports.ItemsService = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
+const paginated_result_interface_1 = require("../shared/interfaces/paginated-result.interface");
 let ItemsService = class ItemsService {
     constructor(itemModel) {
         this.itemModel = itemModel;
-        this.items = [];
     }
-    async insertItem(data, children, isChild, childOf) {
-        const doc = { data, children, isChild, childOf };
-        const newItem = new this.itemModel(doc);
-        const result = await newItem.save();
-        return result;
+    async insertItem(item) {
+        const newItem = await new this.itemModel(item);
+        return await newItem.save();
     }
     async updateChildren(_id, children) {
-        const result = this.itemModel
+        return await this.itemModel
             .findByIdAndUpdate({ _id }, { children })
             .exec();
-        return result;
     }
     async removeChild(_id, child) {
         const item = await this.itemModel.findById({ _id }).exec();
         let children = item.children;
         const index = children.indexOf(child);
         children.splice(index, 1);
-        const result = this.itemModel
+        await this.itemModel
             .findByIdAndUpdate({ _id }, { children })
             .exec();
         this.deleteItem(child);
     }
-    editItem(_id, data) {
-        const result = this.itemModel.findByIdAndUpdate({ _id }, { data }).exec();
-        return result;
+    async editItem(_id, data) {
+        return await this.itemModel.findByIdAndUpdate({ _id }, { data }).exec();
     }
     async getFirstItems(page, limit) {
         const startIndex = (page - 1) * limit;
         const endIndex = page * limit;
         const results = {};
-        if (endIndex < (await this.itemModel.countDocuments().exec())) {
+        if (endIndex < (await this.itemModel.find({ isChild: false }).countDocuments().exec())) {
             results.next = {
                 page: page + 1,
                 limit: limit,
@@ -88,8 +84,7 @@ let ItemsService = class ItemsService {
         }
     }
     async deleteItem(_id) {
-        const result = await this.itemModel.findOneAndDelete({ _id }).exec();
-        return result;
+        return await this.itemModel.findOneAndDelete({ _id }).exec();
     }
 };
 ItemsService = __decorate([

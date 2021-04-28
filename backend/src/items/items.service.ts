@@ -2,11 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Item } from './items.model';
 import { Model } from 'mongoose';
+import { IPaginatedResult } from 'src/shared/interfaces/paginated-result.interface';
 
 @Injectable()
 export class ItemsService {
-  items: Item[] = [];
-
   constructor(@InjectModel('Item') private itemModel: Model<any>) {}
 
   async insertItem(item: Item) {
@@ -15,10 +14,9 @@ export class ItemsService {
   }
 
   async updateChildren(_id: string, children: string[]) {
-    const result = this.itemModel
+    return await this.itemModel
       .findByIdAndUpdate({ _id }, { children })
       .exec();
-    return result;
   }
 
   async removeChild(_id, child) {
@@ -32,16 +30,15 @@ export class ItemsService {
     this.deleteItem(child);
   }
 
-  editItem(_id, data) {
-    const result = this.itemModel.findByIdAndUpdate({ _id }, { data }).exec();
-    return result;
+  async editItem(_id, data) {
+    return await this.itemModel.findByIdAndUpdate({ _id }, { data }).exec();
   }
 
   async getFirstItems(page, limit) {
     const startIndex = (page - 1) * limit;
     const endIndex = page * limit;
 
-    const results: IResult = {};
+    const results: IPaginatedResult = {};
 
     if (endIndex < (await this.itemModel.find({ isChild: false }).countDocuments().exec())) {
       results.next = {
@@ -82,19 +79,7 @@ export class ItemsService {
   }
 
   async deleteItem(_id) {
-    const result = await this.itemModel.findOneAndDelete({ _id }).exec();
-    return result;
+    return await this.itemModel.findOneAndDelete({ _id }).exec();
   }
 }
 
-export interface IResult {
-  results?: Item[];
-  previous?: {
-    page: number;
-    limit: number;
-  };
-  next?: {
-    page: number;
-    limit: number;
-  };
-}
