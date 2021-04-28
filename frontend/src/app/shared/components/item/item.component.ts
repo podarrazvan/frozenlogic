@@ -22,11 +22,14 @@ export class ItemComponent {
     if (!this.editItemMode) {
       this.showMoreItems = !this.showMoreItems;
       if (this.showMoreItems) {
-        this.service
-          .getChildren(this.item._id)
-          .subscribe((response: IItem[]) => {
+        this.service.getChildren(this.item._id).subscribe(
+          (response: IItem[]) => {
             this.children = response;
-          });
+          },
+          (error: any) => {
+            alert(error.message);
+          }
+        );
       }
     }
   }
@@ -36,19 +39,25 @@ export class ItemComponent {
     this.addNewChildren = false;
     const newChildren = this.item.children;
     newChildren.push(child._id);
-    this.service
-      .editChildren(this.item._id, newChildren)
-      .subscribe(() => {
-
-      });
+    this.service.editChildren(this.item._id, newChildren).subscribe(
+      () => {},
+      (error: any) => {
+        alert(error.message);
+      }
+    );
   }
 
   editItem(newData: any): void {
     if (this.editItemMode) {
-      this.service.editItem(this.item._id, newData).subscribe(() => {
-        this.editItemMode = false;
-        this.item.data = newData;
-      });
+      this.service.editItem(this.item._id, newData).subscribe(
+        () => {
+          this.editItemMode = false;
+          this.item.data = newData;
+        },
+        (error: any) => {
+          alert(error.message);
+        }
+      );
     } else {
       this.editItemMode = true;
     }
@@ -68,14 +77,22 @@ export class ItemComponent {
   deleteItem(event: Event): void {
     event.stopPropagation();
     if (this.item.isChild) {
-      this.service
-        .deleteChild(this.item.childOf, this.item._id)
-        .subscribe(() => {
+      this.service.deleteChild(this.item.childOf, this.item._id).subscribe(
+        () => {
           this.item = null;
-        });
+        },
+        (error: any) => {
+          alert(error.message);
+        }
+      );
     }
-    this.service.deleteItem(this.item._id).subscribe(() => {
-      this.item = null;
-    });
+    this.service.deleteItem(this.item._id).subscribe(
+      () => {
+        this.item = null;
+      },
+      (error: any) => {
+        alert(error.message);
+      }
+    );
   }
 }

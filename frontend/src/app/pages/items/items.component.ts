@@ -21,9 +21,8 @@ export class ItemsComponent {
 
   getItems(): void {
     this.loading = true;
-    this.service
-      .getFirstData(this.page, this.limit)
-      .subscribe((response: IPaginatedResult) => {
+    this.service.getFirstData(this.page, this.limit).subscribe(
+      (response: IPaginatedResult) => {
         this.items = response.results;
         if (response.next) {
           this.hasNext = true;
@@ -31,7 +30,11 @@ export class ItemsComponent {
           this.hasNext = false;
         }
         this.loading = false;
-      });
+      },
+      (error: any) => {
+        alert(error.message);
+      }
+    );
   }
 
   newItem(item: any): void {

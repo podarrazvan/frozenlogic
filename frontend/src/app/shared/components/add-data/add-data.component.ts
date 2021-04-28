@@ -22,8 +22,13 @@ export class AddDataComponent {
       isChild: this.isChild,
       childOf: this.childOf,
     };
-    this.service.addData(item).subscribe((response: any) => {
-      this.item.emit(response);
-    });
+    this.service.addData(item).subscribe(
+      (response: any) => {
+        this.item.emit(response);
+      },
+      (error: any) => {
+        alert(error.message);
+      }
+    );
   }
 }
