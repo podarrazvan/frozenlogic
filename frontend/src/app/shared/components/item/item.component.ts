@@ -33,7 +33,7 @@ export class ItemComponent {
     this.addNewChildren = false;
     const newChildren = this.item.children;
     newChildren.push(childId);
-    this.service.editChildren(newChildren, this.item._id).subscribe();
+    this.service.editChildren(this.item._id, newChildren).subscribe();
   }
 
   editItem(newData: any): void {

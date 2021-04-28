@@ -10,13 +10,13 @@ export class DatabaseService {
   constructor(private http: HttpClient) {}
 
   addData(data: IItem): any {
-    return this.http.post(urlItems, data);
+    return this.http.post(urlItems, { item: data });
   }
 
-  editChildren(children: IItem[], id: any): any {
+  editChildren(id: any, children: IItem[]): any {
     const data = {
+      id,
       children,
-      _id: id,
     };
     return this.http.put(`${urlItems}/children`, data);
   }
@@ -31,7 +31,7 @@ export class DatabaseService {
 
   editItem(id: any, data: string): any {
     const send = {
-      _id: id,
+      id,
       data,
     };
     return this.http.put(`${urlItems}/update`, send);
@@ -43,7 +43,7 @@ export class DatabaseService {
 
   deleteChild(id: any, children: any): any {
     const data = {
-      _id: id,
+      id,
       children,
     };
     return this.http.put(`${urlItems}/remove-child`, data);
