@@ -10,16 +10,9 @@ export class ItemsService {
 
   constructor(@InjectModel('Item') private itemModel: Model<any>) {}
 
-  async insertItem(
-    data: string,
-    children: string[],
-    isChild: boolean,
-    childOf: string
-  ) {
-    const doc = { data, children, isChild, childOf };
-    const newItem = new this.itemModel(doc);
-    const result = await newItem.save();
-    return result;
+  async insertItem(item: Item) {
+    const newItem = new this.itemModel(item);
+    return await newItem.save();
   }
 
   async updateChildren(_id: string, children: string[]) {
@@ -34,7 +27,7 @@ export class ItemsService {
     let children = item.children;
     const index = children.indexOf(child);
     children.splice(index, 1);
-    const result = this.itemModel
+    await this.itemModel
       .findByIdAndUpdate({ _id }, { children })
       .exec();
     this.deleteItem(child);
