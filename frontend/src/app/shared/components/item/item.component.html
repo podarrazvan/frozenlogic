@@ -1,6 +1,6 @@
 <div class="item" *ngIf="item != null">
   <div class="item--data" (click)="showMore()">
-    <p *ngIf="!editItemMode">{{ item.data }}</p>
+    <p class="item--data__text" *ngIf="!editItemMode">{{ item.data }}</p>
     <ng-container *ngIf="editItemMode">
       <input type="text" [(ngModel)]="newData" [value]="item.data" />
       <button
